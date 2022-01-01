@@ -25,10 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/metaverse-arc-diagram": [
+    "/access-pass-generator": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/metaverse-arc-diagram.js"
+      "static/chunks/pages/access-pass-generator.js"
     ]
   },
   "ampFirstPages": []

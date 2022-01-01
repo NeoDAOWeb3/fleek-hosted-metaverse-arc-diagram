@@ -98,7 +98,7 @@ export default function Index() {
             {
               !user &&
               <>
-            <h1>Welcome to Scion.</h1>
+            <h1>Welcome to NeoDAO.</h1>
             <p>You know what you must do.</p>
             <div className={'row'}>
               <div
@@ -106,7 +106,6 @@ export default function Index() {
                 onClick={redPill}
               > Red pill </div>
               <br />
-              <div className='button' onClick={() => setSelection(false)}> Learn More </div>
             </div>
           </>
             }

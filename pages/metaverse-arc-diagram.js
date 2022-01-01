@@ -6,7 +6,6 @@
 import React, { useState, useEffect } from 'react';
 import G6 from '@antv/g6';
 
-// Move this into a config file
 const colors = [
     'rgb(91, 143, 249)',
     'rgb(90, 216, 166)',
@@ -20,7 +19,8 @@ const colors = [
     'rgb(227, 137, 163)',
 ];
 
-
+const data_url = 'https://gw.alipayobjects.com/os/basement_prod/70cde3be-22e8-4291-98f1-4d5a5b75b62f.json';
+const randomContainerName =  Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
 export default function arcDiagram(props) {
     const {
@@ -33,12 +33,12 @@ export default function arcDiagram(props) {
 
     useEffect(() => {
             // Initial config of the graph
-            const container = document.getElementById('container');
+            const container = document.getElementById(randomContainerName);
             const width = container.scrollWidth;
             const height = container.scrollHeight || 500;
 
             const graph = new G6.Graph({
-                container: 'container',
+                container: randomContainerName,
                 width,
                 height,
                 linkCenter: true,
@@ -85,7 +85,7 @@ export default function arcDiagram(props) {
                     graph.changeSize(container.scrollWidth, container.scrollHeight);
                 };
 
-            fetch('https://gw.alipayobjects.com/os/basement_prod/70cde3be-22e8-4291-98f1-4d5a5b75b62f.json')
+            fetch(data_url)
                 .then((res) => res.json())
                 .then((data) => {
                     const origin = [width / 2, height / 2];
@@ -167,7 +167,7 @@ export default function arcDiagram(props) {
     }, []);
 
     return (
-        <div id="container" style={{ width: '100%', height: '100%' }}></div>
+        <div id={randomContainerName} style={{ width: '100%', height: '100%' }}></div>
     );
 };
 

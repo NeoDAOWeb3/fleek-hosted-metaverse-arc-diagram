@@ -5,6 +5,7 @@ import Web3 from 'web3';
 import MatrixBG from "../components/matrix.js";
 import getWeb3 from '../utils/getWeb3';
 import getBalance from '../utils/getBalance';
+import PlayerCard from '../components/player-card.js';
 
 const supportedTokens = [
   {
@@ -40,6 +41,8 @@ export default function Index() {
       .then((result) => {
         getBalance(result, '0x9a77eE1DACCc13674B047F967F863B5C8A9f6807')
           .then(balance => {
+            // Activates a user
+            setUser(true);
             setBalance(balance);
           });
       });
@@ -60,12 +63,8 @@ export default function Index() {
       // Check if User is already connected by retrieving the accounts
       web3.eth.getAccounts()
         .then(async (addr) => {
-          // Get all accounts
-          // Get account metadata
+
           setAccounts(addr);
-          console.log(addr);
-          // loop over all accounts and get the balance and get
-          // metadata for each token address in the supportedTokens array
           let address_array = [];
           for (let i = 0; i < addr.length; i++) {
             let balance = await web3.eth.getBalance(addr[i]);
@@ -81,18 +80,11 @@ export default function Index() {
             address_array.push(tokenAddress);
           }
           setTokenAddresses(address_array);
-          setUser(true);
-          // Set User balance into state
-          // setBalance(await web3.eth.getBalance(addr[0]));
-          // Set Hype balance into state
-          // setHypeBalance(await web3.eth.getTokenBalance(addr[0], '0x9a77eE1DACCc13674B047F967F863B5C8A9f6807'));
-          // Set Give balance into state
-          // setGiveBalance(await web3.eth.getBalance(addr[0]));
+          // setUser(true);
           setLoading(false);
         });
     };
     checkConnection();
-    
   }, []);
 
   if (loading) return 'Loading...';
@@ -111,21 +103,24 @@ export default function Index() {
         </Head>
       </div>
       <>
-      
+        
         <div
           className={'matrix'}>
             {
               user &&
               <>
-                <h1>Your profile</h1>
+                <PlayerCard 
+                />
                 <div style={{textAlign: 'center', marginBottom: 50}}>
                   {/* Display all the accounts and their balances */}
+                  
                   {
                     accounts.map((account, index) => {
                       return (
                         <div
                           key={index}
                           className={'account'}>
+                            
                           <div
                             className={'account-name'}>
                             Vault Account: <br />{account}
@@ -157,13 +152,12 @@ export default function Index() {
             {
               !user &&
               <>
-            <h1>NeoDAO Web3 Teleportation Layer</h1>
-            <p>To enter, you must take the red pill.</p>
+            <h1>We've been waiting for you.</h1>
             <div className={'row'}>
               <div
                 className={'button'}
                 onClick={redPill}
-              > Red pill </div>
+              > Red Pill Me </div>
               <br />
             </div>
           </>
@@ -171,8 +165,8 @@ export default function Index() {
           
         </div>
         
-        <MatrixBG selection={true} />
+        
+        </>
       </>
-    </>
   );
 }

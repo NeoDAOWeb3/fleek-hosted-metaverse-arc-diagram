@@ -20,10 +20,17 @@ const supportedTokens = [
   }
 ]
 
+const titles = {
+  margin: '0px 20px',
+  padding: '0px',
+  fontSize: '1.5em',
+}
+
 export default function Index() {
   const [loading, setLoading] = useState(true);
   const [selection, setSelection] = useState(false);
   const [user, setUser] = useState(false);
+  const [accounts, setAccounts] = useState(null);
   const [balance, setBalance] = useState(false);
   const [hypeBalance, setHypeBalance] = useState(false);
   const [giveBalance, setGiveBalance] = useState(false);
@@ -48,12 +55,33 @@ export default function Index() {
       } else if (window.web3) {
         web3 = new Web3(window.web3.currentProvider);
       };
+      
 
       // Check if User is already connected by retrieving the accounts
       web3.eth.getAccounts()
         .then(async (addr) => {
-          // Set User account into state
-          setUser(addr[0]);
+          // Get all accounts
+          // Get account metadata
+          setAccounts(addr);
+          console.log(addr);
+          // loop over all accounts and get the balance and get
+          // metadata for each token address in the supportedTokens array
+          let address_array = [];
+          for (let i = 0; i < addr.length; i++) {
+            let balance = await web3.eth.getBalance(addr[i]);
+            let tokenAddress = supportedTokens.map(token => {
+              return {
+                address: token.address,
+                balance: web3.utils.fromWei(balance, 'ether'),
+                symbol: token.symbol,
+                decimals: token.decimals,
+                name: token.name
+              }
+            });
+            address_array.push(tokenAddress);
+          }
+          setTokenAddresses(address_array);
+          setUser(true);
           // Set User balance into state
           // setBalance(await web3.eth.getBalance(addr[0]));
           // Set Hype balance into state
@@ -83,23 +111,54 @@ export default function Index() {
         </Head>
       </div>
       <>
+      
         <div
           className={'matrix'}>
             {
               user &&
               <>
-                <h1>When you're ready.</h1>
-                <h2>{user}</h2>
-                <h3>{balance}</h3> 
-                <Link href={'/gatekeeper'}><a href="">Enter Metaverse</a></Link>
+                <h1>Your profile</h1>
+                <div style={{textAlign: 'center', marginBottom: 50}}>
+                  {/* Display all the accounts and their balances */}
+                  {
+                    accounts.map((account, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className={'account'}>
+                          <div
+                            className={'account-name'}>
+                            Vault Account: <br />{account}
+                          </div>
+                          <br />
+                          <div
+                            className={'account-balance'}>
+                              Balance: <br />
+                            {tokenAddresses[index].map((token, index) => {
+                              return (
+                                <div
+                                  key={index}
+                                  className={'token-balance'}>
+                                  {token.symbol}: {token.balance}
+                                </div>
+                              )
+                            })}
+                          </div>
+                        </div>
+                      )
+                    })
+                  }
+
+                </div>
+                <Link href={'/gatekeeper'}><a className={'button'} href="">Enter Metaverse</a></Link>
               </>
             }
 
             {
               !user &&
               <>
-            <h1>Welcome to NeoDAO.</h1>
-            <p>You know what you must do.</p>
+            <h1>NeoDAO Web3 Teleportation Layer</h1>
+            <p>To enter, you must take the red pill.</p>
             <div className={'row'}>
               <div
                 className={'button'}
@@ -111,6 +170,7 @@ export default function Index() {
             }
           
         </div>
+        
         <MatrixBG selection={true} />
       </>
     </>

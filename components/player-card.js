@@ -8,8 +8,18 @@ export default function PlayerCard() {
 
     return (
         <>
-            <Draggable>
-                <section className="player-card">
+            <Draggable
+                onStop={() => {
+                    let payload = {
+                        "address": "0x0000000000000000000000000000000000000000",
+                        "request_id": "0x0000000000000000000000000000000000000000",
+                        "object_id": "playerCard",
+                        "url": window.location.href,
+                        "date": new Date().toISOString(),
+                    };
+                    window.postMessage(payload, "*");
+                }}>
+                <section id='playerCard' className="player-card">
                     <div className="card">
                         <header>
                             <MatrixBG selection={true} />

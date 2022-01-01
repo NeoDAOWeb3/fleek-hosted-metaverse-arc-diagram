@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MatrixBG from "../components/matrix.js";
+import MetaverseSelector from "../components/metaverse-selector.js";
 
 export default function GateKeeper() {
   const [address, setAddress] = useState(false);
@@ -36,9 +37,7 @@ export default function GateKeeper() {
       <>
       <div
           className={'matrix'}>
-            <h1> GateKeeper </h1>
-            <input type="text" onChange={(e) => setAddress(e.target.value)} placeholder="Enter metaverse address" />
-            <div className="button" onClick={() => submitAddress()}>Teleport</div>
+            <MetaverseSelector />
           </div>
           <MatrixBG selection={true} />
       </>

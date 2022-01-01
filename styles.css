@@ -73,10 +73,15 @@ p {
 
 section.player-card {
     width: 300px;
-    position: relative;
+    z-index: 9999;
+    position: absolute;
     border-radius: 10px;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.13);
   }
+
+.section.player-card.hidden {
+    display: none;
+}
   section.player-card .card {
     float: left;
     width: 100%;
@@ -102,6 +107,15 @@ section.player-card {
     margin-left: -68px;
     z-index: 2;
   }
+
+  .player-avatar img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 10px solid transparent;
+  }
+
   section.player-card header a.profile:after {
     content: "";
     width: 120px;
@@ -206,26 +220,4 @@ section.player-card {
     -moz-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
     fill: #ffffff;
-  }
-  section.player-card a.codepen-logo:after {
-    content: "View CodePen Profile";
-    position: absolute;
-    bottom: -55px;
-    left: 50%;
-    margin-left: -83.5px;
-    display: inline-block;
-    text-align: center;
-    font-size: 12px;
-    text-transform: uppercase;
-    color: #ffffff;
-    letter-spacing: 1px;
-    font-family: "Roboto Condensed", sans-serif;
-    background-color: #b1aeab;
-    padding: 8px 15px;
-    border-radius: 4px;
-    opacity: 0;
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-    z-index: -1;
   }

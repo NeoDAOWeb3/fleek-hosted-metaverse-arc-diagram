@@ -15,6 +15,7 @@ export default function GateKeeper() {
     const value = window.location.href;
     const query_string = window.location.search;
     const url_params = new URLSearchParams(query_string);
+    const randomContainerName = url_params.get("container");
 
     setPayload({
         "address": url_params.get('address'),

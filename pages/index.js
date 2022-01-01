@@ -5,7 +5,6 @@ import Web3 from 'web3';
 import MatrixBG from "../components/matrix.js";
 import getWeb3 from '../utils/getWeb3';
 import getBalance from '../utils/getBalance';
-import PlayerCard from '../components/player-card.js';
 
 const supportedTokens = [
   {
@@ -109,8 +108,6 @@ export default function Index() {
             {
               user &&
               <>
-                <PlayerCard 
-                />
                 <div style={{textAlign: 'center', marginBottom: 50}}>
                   {/* Display all the accounts and their balances */}
                   
